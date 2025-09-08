@@ -1,0 +1,135 @@
+body {
+    background-color: #f7eadc; /* Warna latar belakang krem */
+    font-family: 'Georgia', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    color: #4a4a4a;
+}
+
+.background-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.bg-top, .bg-bottom, .butterfly, .flower {
+    position: absolute;
+    width: 100%;
+}
+
+.bg-top { top: 0; left: 0; }
+.bg-bottom { bottom: 0; left: 0; }
+.butterfly { top: 10%; left: 10%; width: 100px; }
+.flower { bottom: 5%; right: 10%; width: 80px; }
+
+.book-container {
+    position: relative;
+    width: 350px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cover {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #f5f5dc; /* Warna sampul yang lembut */
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1s ease-in-out;
+    transform-origin: left;
+    z-index: 10;
+}
+
+.photo-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+    padding: 20px;
+    position: relative;
+    width: 90%;
+    height: 90%;
+}
+
+.cover-photo {
+    width: 100%;
+    height: auto;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transform: rotate(3deg);
+    transition: transform 0.3s ease;
+}
+
+.cover-2 { transform: rotate(-5deg); }
+.cover-3 { grid-column: 1 / 3; width: 80%; margin: auto; }
+
+.cover-title {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 2em;
+    color: #e91e63;
+    margin-top: -30px;
+}
+
+.open-btn {
+    padding: 12px 30px;
+    font-size: 1.2em;
+    font-family: 'Georgia', serif;
+    background-color: #a87e8e; /* Warna tombol cokelat muda */
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    margin-top: 20px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.open-btn:hover {
+    background-color: #8c6a76;
+    transform: translateY(-2px);
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+    transform-origin: left;
+    transition: transform 1s ease-in-out;
+    transform: rotateY(0deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    backface-visibility: hidden;
+    opacity: 0; /* Awalnya tidak terlihat */
+}
+
+/* KENDALI PENUH PENGGUNA: KELAS UNTUK MENGAKTIFKAN EFEK */
+.active .cover {
+    transform: rotateY(-180deg);
+}
+
+.active .page {
+    opacity: 1; /* Halaman terlihat saat aktif */
+}

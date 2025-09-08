@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kenangan kitaa</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #fce4ec;
+            margin: 0;
+            overflow-x: hidden;
+            color: #5d4037;
+        }
+
+        .parallax-section {
+            background: url('latar.jpeg') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            transition: opacity 1s ease-in-out;
+        }
+
+        h1, p {
+            font-weight: 300;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        /* Efek Ketikan */
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid orange;
+            font-size: 1.5em;
+            margin-top: 10px;
+            animation: typing 3s steps(30, end) forwards, blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange }
+        }
+
+        /* Halaman Majalah */
+        .content-section {
+            background-color: #f7f7f7;
+            min-height: 100vh;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .magazine-slider {
+            position: relative;
+            width: 80%;
+            max-width: 900px;
+            height: 60vh;
+            border: 10px solid #fff;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .page.active {
+            opacity: 1;
+        }
+
+        .page img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-content {
+            position: absolute;
+            bottom: 5%;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        /* Tombol Lanjut */
+        .next-page-btn {
+            margin-top: 30px;
+            padding: 12px 24px;
+            font-size: 1.2em;
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .next-page-btn:hover {
+            background-color: #d81b60;
+            transform: translateY(-2px);
+        }
+
+        #playPauseBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="parallax-section" id="section1">
+        <h1 class="fade-in">Momen-momen Indah Kita</h1>
+        <p class="fade-in">Scroll untuk melihat ceritanya...</p>
+    </div>
+
+    <div class="content-section">
+        <div class="magazine-slider">
+            <div class="page page-1 active">
+                <img src="1.jpg" alt="Halaman 1">
+                <div class="text-content">
+                    <span class="typewriter-text">inget ga pas momen ini? ini tuh jadi momen fav aku..</span>
+                </div>
+            </div>
+            <div class="page page-2">
+                <img src="2.jpg" alt="Halaman 2">
+                <div class="text-content">
+                    <span class="typewriter-text">makasii untukk semuanyaa.</span>
+                </div>
+            </div>
+            <div class="page page-3">
+                <img src="3.jpg" alt="Halaman 3">
+                <div class="text-content">
+                    <span class="typewriter-text">kamuu adalah sahabat terbaik akuu.</span>
+                </div>
+            </div>
+        </div>
+        <button class="next-page-btn">▶️ pencet disini</button>
+    </div>
+
+    <audio id="music" loop>
+        <source src="laguku.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung audio.
+    </audio>
+    <button id="playPauseBtn">
+        ▶️ coba Putar Lagu nya 
+    </button>
+
+    <script>
+        // Navigasi Majalah
+        const pages = document.querySelectorAll('.page');
+        const nextPageBtn = document.querySelector('.next-page-btn');
+        let currentPageIndex = 0;
+
+        nextPageBtn.addEventListener('click', () => {
+            pages[currentPageIndex].classList.remove('active');
+            currentPageIndex++;
+            if (currentPageIndex >= pages.length) {
+                currentPageIndex = 0;
+            }
+            pages[currentPageIndex].classList.add('active');
+        });
+
+        // Efek Parallax
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            document.getElementById('section1').style.backgroundPositionY = -(scrolled * 0.5) + 'px';
+        });
+
+        // Tombol Musik
+        const audio = document.getElementById('music');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        let isPlaying = false;
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playPauseBtn.innerHTML = '▶️ Putar Lagu';
+            } else {
+                audio.play();
+                playPauseBtn.innerHTML = '⏸️ Jeda Lagu';
+            }
+            isPlaying = !isPlaying;
+        });
+    </script>
+
+</body>
+</html>
